@@ -26,6 +26,7 @@ Bandwidth: 3TB
 All running services on simonxix.com are running as Docker containers rather than services per se. These run from /home/simonxix/docker and currently includes MySQL, WordPress (PHP), Nginx, and Sandstorm. 
 
 `sudo docker-compose down`
+
 `sudo docker-compose up -d --build`
 
 ## Nginx
