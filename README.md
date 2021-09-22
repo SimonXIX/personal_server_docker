@@ -5,13 +5,21 @@ This repository is the private Docker Compose and Nginx configuration for the SS
 ## Technical details
 
 Hostname: ssdvps-18212.vps.net
+
 IP address: 82.163.79.194
+
 Physical location: London
+
 Operating system: Ubuntu 20.04.3 LTS
+
 Processors: 4 cores
+
 RAM: 1GB
+
 Hard disk space: 26 GB
+
 Bandwidth: 3TB
+
 
 ## Docker Compose
 
