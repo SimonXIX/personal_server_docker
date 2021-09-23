@@ -66,9 +66,11 @@ services:
     restart: unless-stopped
     container_name: sandstorm
     volumes:
-      - /opt/sandstorm:/opt/sandstorm/
-    ports:
-      - "0.0.0.0:6080:6080"
+      - /opt/sandstorm:/opt/sandstorm
+      - /home/simonxix/docker/sandstorm_ssl:/home/sandstorm/bin
+      - /etc/nginx/ssl:/etc/nginx/ssl
+        #ports:
+        #- "0.0.0.0:6080:6080"
     expose:
       - "443"
     privileged: true
