@@ -49,6 +49,16 @@ services:
     networks:
       - app-network
 
+  certbot:
+    depends_on:
+      - webserver
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /srv/www/wordpress:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email simonxix@simonxix.com --agree-tos --no-eff-email --force-renewal -d simonxix.com -d www.simonxix.com
+
   sandstorm:
     depends_on: 
       - webserver
