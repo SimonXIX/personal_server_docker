@@ -41,3 +41,5 @@ As of 2021-09-22, Sandstorm runs behind a reverse proxy to preserve the old rlc.
 
 2021-09-23: I dealt with it. Certbot now runs in Docker to renew the simonxix.com domain (cron-ed for once a day) while Sandstorm renews its own certificates and a script (extract_certs.sh) runs in the Sandstorm container to copy those certificates to Nginx SSL folder. In turn, another script (sandstorm_ssl_renew.sh) runs the extract_certs.sh script once a day. 
 
+The wildcard certificates are still useful for any other subdomain I want to set up such testing.simonxix.com. 
+
