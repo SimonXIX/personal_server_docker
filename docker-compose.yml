@@ -46,6 +46,11 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       - /etc/nginx/ssl:/etc/nginx/ssl
       - /home/simonxix/www:/var/www/testing
+      - /home/simonxix/politics_of_patents_search/site:/var/patents/html
+      - /home/simonxix/tea_site:/var/tea/html
+      - /home/simonxix/poem_site:/var/poems/html
+      - /home/simonxix/hels_poem_site:/var/hels_poems/html
+      - /home/simonxix/invitation_site:/var/invitation/html
     networks:
       - app-network
 
@@ -69,8 +74,6 @@ services:
       - /opt/sandstorm:/opt/sandstorm
       - /home/simonxix/docker/sandstorm_ssl:/home/sandstorm/bin
       - /etc/nginx/ssl:/etc/nginx/ssl
-        #ports:
-        #- "0.0.0.0:6080:6080"
     expose:
       - "443"
     privileged: true
@@ -79,8 +82,33 @@ services:
     entrypoint: 
       bash -c 'useradd --system --user-group sandstorm && /opt/sandstorm/sandstorm start && tail -f /opt/sandstorm/var/log/sandstorm.log & sleep infinity'
 
+  php:
+    container_name: php
+    image: php:8.0-fpm
+    env_file:
+      - /home/simonxix/politics_of_patents_search/config.env
+    volumes:
+      - /home/simonxix/invitation_site:/var/invitation/html
+      - /home/simonxix/hels_poem_site:/var/hels_poems/html
+      - /home/simonxix/poem_site:/var/poems/html
+      - /home/simonxix/tea_site:/var/tea/html
+      - /home/simonxix/politics_of_patents_search/site:/var/patents/html
+    networks:
+      - app-network
+
+  solr:
+    container_name: solr
+    image: solr:latest
+    ports:
+      - '8983:8983'
+    volumes:
+      - solrdata:/var/solr
+    networks:
+      - app-network
+
 volumes:
   dbdata:
+  solrdata:
 
 networks:
   app-network:
