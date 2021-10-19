@@ -1,1 +1,6 @@
 .env
+sandstorm.conf
+docker-compose_with*
+nginx-conf/patents.conf
+nginx-conf/hels_poems.conf
+nginx-nonactive

@@ -45,12 +45,7 @@ services:
       - ./nginx-conf:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/letsencrypt
       - /etc/nginx/ssl:/etc/nginx/ssl
-      - /home/simonxix/www:/var/www/testing
-      - /home/simonxix/politics_of_patents_search/site:/var/patents/html
-      - /home/simonxix/tea_site:/var/tea/html
-      - /home/simonxix/poem_site:/var/poems/html
-      - /home/simonxix/hels_poem_site:/var/hels_poems/html
-      - /home/simonxix/invitation_site:/var/invitation/html
+      - /home/simonxix/websites:/var/www/
     networks:
       - app-network
 
@@ -86,13 +81,9 @@ services:
     container_name: php
     image: php:8.0-fpm
     env_file:
-      - /home/simonxix/politics_of_patents_search/config.env
+      - /home/simonxix/websites/politics_of_patents_search/config.env
     volumes:
-      - /home/simonxix/invitation_site:/var/invitation/html
-      - /home/simonxix/hels_poem_site:/var/hels_poems/html
-      - /home/simonxix/poem_site:/var/poems/html
-      - /home/simonxix/tea_site:/var/tea/html
-      - /home/simonxix/politics_of_patents_search/site:/var/patents/html
+      - /home/simonxix/websites:/var/www
     networks:
       - app-network
 
