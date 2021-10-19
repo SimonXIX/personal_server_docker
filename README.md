@@ -1,6 +1,6 @@
 # Docker Compose and Nginx configuration for simonxix.com
 
-This repository is the private Docker Compose and Nginx configuration for the SSD VPS virtual server ssdvps-18212.vps.net running https://simonxix.com and https://rlc.sandcats.io.
+This repository is the Docker Compose and Nginx configuration for the SSD VPS virtual server ssdvps-18212.vps.net running https://simonxix.com and https://rlc.sandcats.io.
 
 ## Technical details
 
