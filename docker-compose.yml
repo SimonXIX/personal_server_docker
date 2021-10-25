@@ -34,18 +34,27 @@ services:
   webserver:
     depends_on:
       - wordpress
+      - goaccess
     image: nginx:latest
     container_name: nginx
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
+      - "37890:37890"
     volumes:
+      # WordPress
       - /srv/www/wordpress:/var/www/html
+      # Nginx configuration files and SSL certs/keys
       - ./nginx-conf:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/letsencrypt
       - /etc/nginx/ssl:/etc/nginx/ssl
+      # Other websites
       - /home/simonxix/websites:/var/www/
+      # GoAccess
+      - ./goaccess/html:/srv/report
+      - /home/simonxix/nginx/log:/var/log/nginx
+      - ./goaccess/data/access.conf:/etc/nginx/access.conf
     networks:
       - app-network
 
@@ -96,6 +105,24 @@ services:
       - solrdata:/var/solr
     networks:
       - app-network
+
+  goaccess:
+    # build and Nginx config from https://github.com/icamys/docker-goaccess-nginx
+    build:
+       context: ./goaccess
+       dockerfile: Dockerfile
+       args:
+          ALPINE_VERSION: 3.10.2
+    restart: unless-stopped
+    container_name: goaccess
+    expose:
+       - "7890"
+    volumes:
+       - ./goaccess/data:/srv/data
+       - ./goaccess/html:/srv/report
+       - /home/simonxix/nginx/log/:/var/log/nginx/
+    networks:
+       - app-network
 
 volumes:
   dbdata:
