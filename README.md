@@ -1,14 +1,10 @@
 # Docker Compose and Nginx configuration for simonxix.com
 
-This repository is the Docker Compose and Nginx configuration for the SSD VPS virtual server ssdvps-18212.vps.net running https://simonxix.com and https://rlc.sandcats.io.
+This repository is the Docker Compose and Nginx configuration for the SSD virtual server running https://simonxix.com and https://rlc.sandcats.io. It's potentially useful for anyone looking to deploy WordPress, Sandstorm, GoAccess, or PHP against Nginx in Docker Compose. 
 
 ## Technical details
 
-Hostname: ssdvps-18212.vps.net
-
 IP address: 82.163.79.194
-
-Physical location: London
 
 Operating system: Ubuntu 20.04.3 LTS
 
@@ -20,10 +16,9 @@ Hard disk space: 26 GB
 
 Bandwidth: 3TB
 
-
 ## Docker Compose
 
-All running services on simonxix.com are running as Docker containers rather than services per se. These run from /home/simonxix/docker and currently includes MySQL, WordPress (PHP), Nginx, and Sandstorm. 
+All running services on simonxix.com are running as Docker containers. These run from /home/simonxix/docker and currently includes MySQL, WordPress (PHP), Apache Solr, GoAccess, Nginx, and Sandstorm. 
 
 `sudo docker-compose down`
 
