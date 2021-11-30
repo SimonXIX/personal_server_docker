@@ -54,7 +54,7 @@ services:
       - /home/simonxix/websites:/var/www/
       # GoAccess
       - ./goaccess/html:/srv/report
-      - /home/simonxix/nginx/log:/var/log/nginx
+      - /home/simonxix/logs/nginx:/var/log/nginx
       - ./goaccess/data/access.conf:/etc/nginx/access.conf
     networks:
       - app-network
@@ -121,7 +121,7 @@ services:
     volumes:
        - ./goaccess/data:/srv/data
        - ./goaccess/html:/srv/report
-       - /home/simonxix/nginx/log/:/var/log/nginx/
+       - /home/simonxix/logs/nginx:/var/log/nginx/
        - ./goaccess/data/database:/tmp
     networks:
        - app-network
