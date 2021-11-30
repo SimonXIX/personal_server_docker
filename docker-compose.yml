@@ -122,6 +122,7 @@ services:
        - ./goaccess/data:/srv/data
        - ./goaccess/html:/srv/report
        - /home/simonxix/nginx/log/:/var/log/nginx/
+       - ./goaccess/data/database:/tmp
     networks:
        - app-network
 
