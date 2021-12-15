@@ -1,6 +1,6 @@
 # Docker Compose and Nginx configuration for simonxix.com
 
-This repository is the Docker Compose and Nginx configuration for the SSD virtual server running https://simonxix.com and https://rlc.sandcats.io. It's potentially useful for anyone looking to deploy WordPress, Sandstorm, GoAccess, or PHP against Nginx in Docker Compose. 
+This repository is the Docker Compose and Nginx configuration for the SSD virtual server running https://simonxix.com and https://rlc.sandcats.io. It's potentially useful for anyone looking to deploy WordPress, Sandstorm, GoAccess, Joplin Server, or PHP against Nginx in Docker Compose. 
 
 ## Technical details
 
