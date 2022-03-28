@@ -10,6 +10,7 @@ services:
       - MYSQL_DATABASE=wordpress
     volumes:
       - dbdata:/var/lib/mysql
+      - /home/simonxix/database:/import
     command: '--default-authentication-plugin=mysql_native_password'
     networks:
       - app-network
@@ -91,21 +92,21 @@ services:
     container_name: php
     image: php:8.0-fpm
     env_file:
-      - /home/simonxix/websites/politics_of_patents_search/config.env
+       - /home/simonxix/websites/politics_of_patents_search/config.env
     volumes:
-      - /home/simonxix/websites:/var/www
+       - /home/simonxix/websites:/var/www
     networks:
-      - app-network
+       - app-network
 
-  solr:
-    container_name: solr
-    image: solr:latest
-    ports:
-      - '8983:8983'
-    volumes:
-      - solrdata:/var/solr
-    networks:
-      - app-network
+        #solr:
+        #container_name: solr
+        #image: solr:latest
+        #ports:
+        #- '8983:8983'
+        #volumes:
+        #- solrdata:/var/solr
+        #networks:
+        #- app-network
 
   goaccess:
     # build and Nginx config from https://github.com/icamys/docker-goaccess-nginx
@@ -158,6 +159,38 @@ services:
     networks:
        - app-network
 
+  wikiheist:
+    build: /home/simonxix/wikiheist/web
+    container_name: wikiheist
+    expose:
+      - 5000
+    env_file:
+      - /home/simonxix/wikiheist/.env.prod
+    command: gunicorn --workers=3 --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - app-network
+
+  tor:
+    container_name: tor
+    image: torservers/onionize
+    restart: always
+    volumes:
+       - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+       - app-network
+       - onion-network
+  
+  onion-nginx:
+    container_name: onion-nginx
+    image: nginx:latest
+    volumes:
+       - /home/simonxix/websites/testing:/var/www/html
+       - ./nginx-conf/onion:/etc/nginx/conf.d
+    environment:
+       - ONIONSERVICE_NAME=onion-nginx
+    networks:
+       - onion-network
+
 volumes:
   dbdata:
   solrdata:
@@ -165,3 +198,7 @@ volumes:
 networks:
   app-network:
     driver: bridge
+  onion-network:
+    driver: bridge
+    driver_opts:
+       enable_ip_masquerade: "false"
