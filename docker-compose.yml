@@ -171,6 +171,7 @@ services:
       - app-network
 
   tor:
+    # experiments with Tor services in Docker based on https://github.com/torservers/onionize-docker
     container_name: tor
     image: torservers/onionize
     restart: always
