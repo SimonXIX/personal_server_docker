@@ -192,6 +192,32 @@ services:
     networks:
        - onion-network
 
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    ports:
+      - "32400:32400/tcp"
+      - "1900:1900/udp"
+      - "3005:3005/tcp"
+      - "5353:5353/udp"
+      - "8324:8324/tcp"
+      - "32410:32410/udp"
+      - "32412-32414:32412-32414/udp"
+      - "32469:32469/tcp"
+    volumes:
+      - /plex/database:/config
+      - /plex/transcode/temp:/transcode
+      - /plex/media:/data
+    networks:
+      - app-network
+    restart: always
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=$VIRTUAL_PORT
+      - PLEX_CLAIM=$PLEX_CLAIM
+
 volumes:
   dbdata:
   solrdata:
