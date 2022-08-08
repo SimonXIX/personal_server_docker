@@ -10,7 +10,6 @@ services:
       - MYSQL_DATABASE=wordpress
     volumes:
       - dbdata:/var/lib/mysql
-      - /home/simonxix/database:/import
     command: '--default-authentication-plugin=mysql_native_password'
     networks:
       - app-network
@@ -217,6 +216,19 @@ services:
       - VIRTUAL_HOST=$VIRTUAL_HOST
       - VIRTUAL_PORT=$VIRTUAL_PORT
       - PLEX_CLAIM=$PLEX_CLAIM
+
+  carbon:
+    build: /home/simonxix/websites/carbon-graph/web
+    container_name: carbon
+    expose:
+      - 5000
+    volumes:
+      - /home/simonxix/websites/carbon-graph/README.md:/code/README.md
+    env_file:
+      - /home/simonxix/websites/carbon-graph/.env.prod
+    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - app-network
 
 volumes:
   dbdata:
