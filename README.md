@@ -6,13 +6,13 @@ This repository is the Docker Compose and Nginx configuration for the SSD virtua
 
 IP address: 82.163.79.194
 
-Operating system: Ubuntu 20.04.3 LTS
+Operating system: Ubuntu 22.04.1 LTS
 
 Processors: 4 cores
 
 RAM: 1GB
 
-Hard disk space: 26 GB
+Hard disk space: 50 GB
 
 Bandwidth: 3TB
 
