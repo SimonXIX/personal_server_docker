@@ -235,11 +235,14 @@ services:
     container_name: website
     expose:
       - 5000
+    volumes:
+      - /home/simonxix/websites/simonxix.com/web:/code
     env_file:
       - /home/simonxix/websites/simonxix.com/.env.prod
     command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
     networks:
       - app-network
+      - onion-network
 
 volumes:
   dbdata:
