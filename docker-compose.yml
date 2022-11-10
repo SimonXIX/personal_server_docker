@@ -67,7 +67,7 @@ services:
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
       - /srv/www/wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email simonxix@simonxix.com --agree-tos --no-eff-email --force-renewal -d simonxix.com -d www.simonxix.com
+    command: certonly --nginx --email simonxix@simonxix.com --agree-tos --no-eff-email --force-renewal -d simonxix.com -d www.simonxix.com
 
   sandstorm:
     depends_on: 
@@ -184,7 +184,6 @@ services:
     container_name: onion-nginx
     image: nginx:latest
     volumes:
-       - /home/simonxix/websites/testing:/var/www/html
        - ./nginx-conf/onion:/etc/nginx/conf.d
     environment:
        - ONIONSERVICE_NAME=onion-nginx
@@ -243,6 +242,19 @@ services:
     networks:
       - app-network
       - onion-network
+
+  trains:
+    build: /home/simonxix/websites/trains/web
+    container_name: trains
+    expose:
+      - 5000
+    volumes:
+      - /home/simonxix/websites/trains/web:/code
+    env_file:
+      - /home/simonxix/websites/trains/.env.prod
+    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - app-network
 
 volumes:
   dbdata:
