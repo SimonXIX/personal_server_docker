@@ -28,9 +28,9 @@ All running services on simonxix.com are running as Docker containers. These run
 
 The Sandstorm server is SSL secured. This was done by setting up a wildcard certificate for the simonxix.com domain name (https://medium.com/@utkarsh_verma/how-to-obtain-a-wildcard-ssl-certificate-from-lets-encrypt-and-setup-nginx-to-use-wildcard-cfb050c8b33f) and then setting up Sandstorm with Nginx for reverse proxy (https://docs.sandstorm.io/en/latest/administering/reverse-proxy/).
 
-Run this command to get a wildcard SSL certificate from Let's Encrypt:
+Run this command to get an SSL certificate from Let's Encrypt:
 
-`sudo certbot --server https://acme-v02.api.letsencrypt.org/directory -d *.simonxix.com --manual --preferred-challenges dns-01 certonly`
+`sudo certbot -d *.simonxix.com,simonxix.com --manual --preferred-challenges dns certonly`
 
 As of 2021-09-22, Sandstorm runs behind a reverse proxy to preserve the old rlc.sandcats.io domain name following instructions at https://juanjoalvarez.net/posts/2017/how-set-sandstorm-behind-reverse-proxy-keeping-you/. This uses Sandcats' own SSL certificates which might be a problem when they expire. I'll deal with that when it comes to it.
 
