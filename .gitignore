@@ -1,11 +1,15 @@
 .env
 sandstorm.conf
+sandstorm_ssl/sandstorm.key
+sandstorm_ssl/sandstorm.pem
 docker-compose_with*
 nginx-conf/patents.conf
 nginx-conf/hels_poems.conf
+nginx-conf/trains.conf
 nginx-nonactive
 goaccess/data/access.conf
 goaccess/GeoLite2-City.mmdb
 goaccess/html/index.html
 goaccess/data/database
 joplin-data
+podfetch
