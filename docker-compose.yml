@@ -13,6 +13,10 @@ services:
     command: '--default-authentication-plugin=mysql_native_password'
     networks:
       - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   wordpress:
     depends_on:
@@ -60,39 +64,39 @@ services:
     networks:
       - app-network
 
-  certbot:
-    depends_on:
-      - webserver
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
+        #certbot:
+        #depends_on:
+        #- webserver
+        #image: certbot/certbot
+        #container_name: certbot
+        #volumes:
+        #- /etc/letsencrypt:/etc/letsencrypt
         #- /srv/www/wordpress:/var/www/html
-    command: certonly --nginx --email simonxix@simonxix.com --agree-tos --no-eff-email --force-renewal -d simonxix.com -d *.simonxix.com
+        #command: certonly --nginx --email simonxix@simonxix.com --agree-tos --no-eff-email --force-renewal -d simonxix.com -d *.simonxix.com
+        #networks:
+        #- app-network
 
-  sandstorm:
-    depends_on: 
-      - webserver
-    image: buildpack-deps
-    restart: unless-stopped
-    container_name: sandstorm
-    volumes:
-      - /opt/sandstorm:/opt/sandstorm
-      - /home/simonxix/docker/sandstorm_ssl:/home/sandstorm/bin
-      - /etc/nginx/ssl:/etc/nginx/ssl
-    expose:
-      - "443"
-    privileged: true
-    networks:
-      - app-network
-    entrypoint: 
-      bash -c 'useradd --system --user-group sandstorm && /opt/sandstorm/sandstorm start && tail -f /opt/sandstorm/var/log/sandstorm.log & sleep infinity'
+        #sandstorm:
+        #depends_on: 
+        #- webserver
+        #image: buildpack-deps
+        #restart: unless-stopped
+        #container_name: sandstorm
+        #volumes:
+        #- /opt/sandstorm:/opt/sandstorm
+        #- /home/simonxix/docker/sandstorm_ssl:/home/sandstorm/bin
+        #- /etc/nginx/ssl:/etc/nginx/ssl
+        #expose:
+        #- "443"
+        #privileged: true
+        #networks:
+        #- app-network
+        #entrypoint: 
+        #bash -c 'useradd --system --user-group sandstorm && /opt/sandstorm/sandstorm start && tail -f /opt/sandstorm/var/log/sandstorm.log & sleep infinity'
 
   php:
     container_name: php
     image: php:8.0-fpm
-    env_file:
-       - /home/simonxix/websites/politics_of_patents_search/config.env
     volumes:
        - /home/simonxix/websites:/var/www
     networks:
@@ -149,11 +153,11 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:13.1
+    image: postgres:16.3
     ports:
        - "5432:5432"
     volumes:
-       - ./joplin-data:/var/lib/postgresql/data
+       - ./postgres16-data:/var/lib/postgresql/data
     environment:
        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
        - POSTGRES_USER=$POSTGRES_USER
@@ -168,7 +172,7 @@ services:
       - 5000
     env_file:
       - /home/simonxix/wikiheist/.env.prod
-    command: gunicorn --workers=3 --bind 0.0.0.0:5000 manage:app --timeout 120
+    command: gunicorn --workers=1 --max-requests 50000 --bind 0.0.0.0:5000 manage:app --timeout 120
     networks:
       - app-network
 
@@ -226,9 +230,10 @@ services:
       - 5000
     volumes:
       - /home/simonxix/websites/carbon-graph/README.md:/code/README.md
+      - /home/simonxix/websites/carbon-graph/google_credentials.json:/code/app/google_credentials.json
     env_file:
       - /home/simonxix/websites/carbon-graph/.env.prod
-    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
+    command: gunicorn --workers=2 --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
     networks:
       - app-network
 
@@ -241,7 +246,7 @@ services:
       - /home/simonxix/websites/simonxix.com/web:/code
     env_file:
       - /home/simonxix/websites/simonxix.com/.env.prod
-    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
+    command: gunicorn --workers=3 --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
     networks:
       - app-network
       - onion-network
@@ -255,7 +260,7 @@ services:
       - /home/simonxix/websites/trains/web:/code
     env_file:
       - /home/simonxix/websites/trains/.env.prod
-    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
+    command: gunicorn --workers=1 --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
     networks:
       - app-network
 
@@ -269,13 +274,14 @@ services:
       - /home/simonxix/websites/flying_website/README.md:/code/app/content/about.md
     env_file:
       - /home/simonxix/websites/flying_website/.env.prod
-    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 120
+    command: gunicorn --workers=1 --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
     networks:
       - app-network
 
   podfetch:
-    image: samuel19982/podfetch:postgres
+    image: samuel19982/podfetch:latest
     container_name: podfetch
+    user: ${UID:-1000}:${GID:-1000}
     expose:
       - 5000
     volumes:
@@ -289,6 +295,32 @@ services:
       - SERVER_URL=https://podfetch.simonxix.com
       - RUST_BACKTRACE=full
       - DATABASE_URL=postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/podfetch
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  ghost:
+    image: ghost:${GHOST_TAG}
+    container_name: ghost
+    restart: always
+    ports:
+      - 8080:2368
+    env_file:
+      - .env
+    environment:
+      # see https://ghost.org/docs/config/#configuration-options
+      database__client: mysql
+      database__connection__host: mysql
+      # this url value is just an example, and is likely wrong for your environment!
+      url: https://opensauce.simonxix.com
+      # contrary to the default mentioned in the linked documentation, this image defaults to NODE_ENV=production (so development mode needs to be explicitly specified if desired)
+      #NODE_ENV: development
+    volumes:
+      - ./ghost-data:/var/lib/ghost/content
+      - ./ghost-data/template.hbs:/var/lib/ghost/current/node_modules/@tryghost/email-service/lib/email-templates/template.hbs
+    depends_on:
+      - db
     networks:
       - app-network
 
