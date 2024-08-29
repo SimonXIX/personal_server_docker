@@ -1,6 +1,6 @@
 # Docker Compose and Nginx configuration for simonxix.com
 
-This repository is the Docker Compose and Nginx configuration for the SSD virtual server running https://simonxix.com and https://rlc.sandcats.io. It's potentially useful for anyone looking to deploy WordPress, Sandstorm, GoAccess, Joplin Server, or PHP against Nginx in Docker Compose. 
+This repository is the Docker Compose and Nginx configuration for the SSD virtual server running https://simonxix.com and other *.simonxix.com websites. It's potentially useful for anyone looking to deploy WordPress, Sandstorm, GoAccess, Joplin Server, or PHP against Nginx in Docker Compose. 
 
 ## Technical details
 
@@ -27,6 +27,18 @@ All running services on simonxix.com are running as Docker containers. These run
 ## SSL
 
 The Sandstorm server is SSL secured. This was done by setting up a wildcard certificate for the simonxix.com domain name (https://medium.com/@utkarsh_verma/how-to-obtain-a-wildcard-ssl-certificate-from-lets-encrypt-and-setup-nginx-to-use-wildcard-cfb050c8b33f) and then setting up Sandstorm with Nginx for reverse proxy (https://docs.sandstorm.io/en/latest/administering/reverse-proxy/).
+
+### Lego
+
+As of 2024-08-29, all SSL certificates are managed using Lego. This runs Let's Encrypt requests and automates the process of adding DNS records for domain challenges.
+
+This runs using: 
+
+`docker compose -f /home/simonxix/docker/lego/docker-compose.yml up lego-renew`
+
+All SSL certificates are now kept in the directory /etc/letsencrypt/lego_cert_store which is mirrored as a volume in the Nginx webserver Docker container.
+
+### deprecated SSL process
 
 Run this command to get an SSL certificate from Let's Encrypt:
 
