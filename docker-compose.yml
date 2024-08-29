@@ -50,31 +50,21 @@ services:
     volumes:
       # WordPress
       - /srv/www/wordpress:/var/www/html
-      # Nginx configuration files and SSL certs/keys
+      # Nginx configuration files
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./nginx-conf:/etc/nginx/conf.d
-      - /etc/letsencrypt:/etc/letsencrypt
+      # SSL certs/keys
+      #- /etc/letsencrypt:/etc/letsencrypt
       - /etc/nginx/ssl:/etc/nginx/ssl
+      - /etc/letsencrypt/lego_cert_store:/certs
       # Other websites
       - /home/simonxix/websites:/var/www/
-      # GoAccess
+     # GoAccess
       - ./goaccess/html:/srv/report
       - /home/simonxix/logs/nginx:/var/log/nginx
       - ./goaccess/data/access.conf:/etc/nginx/access.conf
     networks:
       - app-network
-
-        #certbot:
-        #depends_on:
-        #- webserver
-        #image: certbot/certbot
-        #container_name: certbot
-        #volumes:
-        #- /etc/letsencrypt:/etc/letsencrypt
-        #- /srv/www/wordpress:/var/www/html
-        #command: certonly --nginx --email simonxix@simonxix.com --agree-tos --no-eff-email --force-renewal -d simonxix.com -d *.simonxix.com
-        #networks:
-        #- app-network
 
         #sandstorm:
         #depends_on: 

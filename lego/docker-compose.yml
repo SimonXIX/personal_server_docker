@@ -1,0 +1,29 @@
+services:
+  lego-run:
+    container_name: lego-run
+    image: goacme/lego
+    environment:
+      - NJALLA_TOKEN=$NJALLA_TOKEN
+    volumes:
+      - /etc/letsencrypt/lego_cert_store:/certs
+    command: "--accept-tos
+             --email=\"simon.bowie@protonmail.com\"
+             --dns=\"njalla\"
+             --path=\"/certs\"
+             --domains=\"simonxix.com\"
+             --domains=\"*.simonxix.com\"
+             run"
+
+  lego-renew:
+    container_name: lego-renew
+    image: goacme/lego
+    environment:
+      - NJALLA_TOKEN=$NJALLA_TOKEN
+    volumes:
+      - /etc/letsencrypt/lego_cert_store:/certs
+    command: "--email=\"simon.bowie@protonmail.com\"
+             --dns=\"njalla\"
+             --path=\"/certs\"
+             --domains=\"simonxix.com\"
+             --domains=\"*.simonxix.com\"
+             renew --days 60"
