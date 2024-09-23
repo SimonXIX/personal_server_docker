@@ -32,7 +32,7 @@ Each stack can be brought up or down by going to their respective subdirectory a
 
 ### subdirectories
 
-./flask runs Flask (https://flask.palletsprojects.com/) applications bundled together in the same Docker Compose stack. These applications are initialised in this directory as submodules from their respective Git repositories. 
+./flask runs Flask (https://flask.palletsprojects.com/) applications bundled together in the same Docker Compose stack. These applications are initialised in this directory as Git submodules from their respective GitHub repositories. 
 
 ./ghost runs Ghost (https://ghost.org/), the newsletter publishing platform. The stack includes the Ghost application and a MySQL database for Ghost's data.
 
