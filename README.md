@@ -59,11 +59,17 @@ Each stack can be brought up or down by going to their respective subdirectory a
 Managing the various Docker Compose stacks in bulk is done using docker_management.sh, a simple Bash script for bringing stacks up and down. The various stacks are specified in the DOCKER_CONTAINERS array and the script loops through them to turn them on or off based on the flag sent to the script. 
 
 > Syntax: docker_management.sh [-l|h|s|t|r]
+> 
 > options:
+>
 > l     Print the MIT License notification.
+>
 > h     Print this Help.
+>
 > s     Stop all Docker Compose stacks.
+>
 > t     Start all Docker Compose stacks.
+>
 > r     Restart all Docker Compose stacks.
 
 This could and should probably be done with something like Portainer (https://www.portainer.io/) but that's for another day.
