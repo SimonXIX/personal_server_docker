@@ -54,6 +54,20 @@ Each stack can be brought up or down by going to their respective subdirectory a
 
 ./wordpress runs a WordPress (https://wordpress.org/) site. This stack contains the WordPress application (PHP8-FPM) and a MariaDB database. 
 
+## Docker management
+
+Managing the various Docker Compose stacks in bulk is done using docker_management.sh, a simple Bash script for bringing stacks up and down. The various stacks are specified in the DOCKER_CONTAINERS array and the script loops through them to turn them on or off based on the flag sent to the script. 
+
+> Syntax: docker_management.sh [-l|h|s|t|r]
+> options:
+> l     Print the MIT License notification.
+> h     Print this Help.
+> s     Stop all Docker Compose stacks.
+> t     Start all Docker Compose stacks.
+> r     Restart all Docker Compose stacks.
+
+This could and should probably be done with something like Portainer (https://www.portainer.io/) but that's for another day.
+
 ## Nginx
 
 Every service and website on the server runs through the Dockerised Nginx webserver and reverse proxy. The configurations for these services and websites are kept in ./nginx/nginx-conf which is served as /etc/nginx/conf.d in the container. Sandstorm has a separate domain name but is also reverse proxied following instructions at https://docs.sandstorm.io/en/latest/administering/reverse-proxy
