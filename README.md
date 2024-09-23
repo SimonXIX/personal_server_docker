@@ -18,7 +18,7 @@ Hard disk space: 80 GB
 
 Bandwidth: 500 Mb/s
 
-Location: Satigny, Switzerland
+Location: Satigny, Switzerland 🇨🇭
 
 ## structure
 
