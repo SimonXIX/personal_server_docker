@@ -11,7 +11,18 @@
 ############################################################
 
 DOCKER="/usr/bin/docker"
-declare -a DOCKER_CONTAINERS=("flask" "ghost" "goaccess" "joplin" "php" "podfetch" "sandstorm" "tor" "wordpress" "nginx")
+declare -a DOCKER_CONTAINERS=(
+	"flask" 
+	"ghost" 
+	"goaccess" 
+	"joplin" 
+	"php" 
+	"podfetch" 
+	"sandstorm" 
+	"tor" 
+	"wordpress" 
+	"nginx"
+)
 
 ############################################################
 # subprograms                                              #
