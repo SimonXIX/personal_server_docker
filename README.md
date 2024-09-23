@@ -48,9 +48,9 @@ Each stack can be brought up or down by going to their respective subdirectory a
 
 ./podfetch runs Podfetch (https://github.com/SamTV12345/PodFetch), a podcast listening platform that runs in the browser. This stack includes Podfetch itself and a PostgreSQL database for Podfetch. 
 
-./sandstorm runs Sandstorm (https://sandstorm.org/) inside a buildpack-deps container. This runs Sandstorm from /opt/sandstorm on the host server. There are also scripts in here to handle renewing the SSL certificates for the *.sandcats.io domain and extracting the certificates to be picked up by Nginx. This largely follows Juanjo Alvarez's instructions for this here: https://juanjoalvarez.net/posts/2017/how-set-sandstorm-behind-reverse-proxy-keeping-you/. Note also this extremely annoying and non-obvious requirement for running in Ubuntu 24.04: https://groups.google.com/g/sandstorm-dev/c/4JFhr7B7QZU
+./sandstorm runs Sandstorm (https://sandstorm.org/) inside a buildpack-deps container. This runs Sandstorm from /opt/sandstorm on the host server. There are also scripts in here to handle renewing the SSL certificates for the *.sandcats.io domain and extracting the certificates to be picked up by Nginx. This largely follows Juanjo Alvarez's instructions for this here: https://juanjoalvarez.net/posts/2017/how-set-sandstorm-behind-reverse-proxy-keeping-you/. Note also this extremely annoying and non-obvious requirement for running in Ubuntu 24.04: https://groups.google.com/g/sandstorm-dev/c/4JFhr7B7QZU.
 
-./tor runs an onionizing application and a separate version of Nginx for the onion service version of the main site. This is based on the Onionize process outlined here: https://github.com/torservers/onionize-docker
+./tor runs an onionizing application and a separate version of Nginx for the onion service version of the main site. This is based on the Onionize process outlined here: https://github.com/torservers/onionize-docker.
 
 ./wordpress runs a WordPress (https://wordpress.org/) site. This stack contains the WordPress application (PHP8-FPM) and a MariaDB database. 
 
@@ -76,7 +76,7 @@ This could and should probably be done with something like Portainer (https://ww
 
 ## Nginx
 
-Every service and website on the server runs through the Dockerised Nginx webserver and reverse proxy. The configurations for these services and websites are kept in ./nginx/nginx-conf which is served as /etc/nginx/conf.d in the container. Sandstorm has a separate domain name but is also reverse proxied following instructions at https://docs.sandstorm.io/en/latest/administering/reverse-proxy
+Every service and website on the server runs through the Dockerised Nginx webserver and reverse proxy. The configurations for these services and websites are kept in ./nginx/nginx-conf which is served as /etc/nginx/conf.d in the container. Sandstorm has a separate domain name but is also reverse proxied following instructions at https://docs.sandstorm.io/en/latest/administering/reverse-proxy.
 
 ### SSL
 
