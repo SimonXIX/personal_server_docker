@@ -1,0 +1,45 @@
+services:
+  podfetch:
+    image: samuel19982/podfetch:latest
+    container_name: podfetch
+    restart: unless-stopped
+    #user: ${UID:-1001}:${GID:-1001}
+    user: 1001:1001
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./podcasts:/app/podcasts
+    environment:
+      - GPODDER_INTEGRATION_ENABLED=true
+      - BASIC_AUTH=true
+      - USERNAME=$PODFETCH_USERNAME
+      - PASSWORD=$PODFETCH_PASSWORD
+      - POLLING_INTERVAL=300
+      - SERVER_URL=https://podfetch.simonxix.com
+      - RUST_BACKTRACE=full
+      - DATABASE_URL=postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB
+    depends_on:
+      - podfetch_db
+    networks:
+      - nginx_main-network
+
+  podfetch_db:
+    image: postgres
+    container_name: podfetch_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - podfetch-db:/data/postgres
+    networks:
+      - nginx_main-network
+
+volumes:
+  podfetch-db:
+
+networks:
+  nginx_main-network:
+    external: true

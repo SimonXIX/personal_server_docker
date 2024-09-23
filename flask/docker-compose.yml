@@ -1,0 +1,79 @@
+services:
+  simonxix:
+    build: ./simonxix.com/web
+    container_name: simonxix
+    restart: always
+    expose:
+      - 5000
+    volumes:
+      - ./simonxix.com/web:/code
+    env_file:
+      - ./simonxix.com/.env.prod
+    command: gunicorn --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - nginx_main-network
+      - tor_onion-network
+
+  carbon:
+    build: ./carbon-graph/web
+    container_name: carbon
+    restart: unless-stopped
+    expose:
+      - 5000
+    volumes:
+      - ./carbon-graph/web:/code
+      - ./carbon-graph/google_credentials.json:/code/app/google_credentials.json
+    env_file:
+      - ./carbon-graph/.env.prod
+    command: gunicorn --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - nginx_main-network
+
+  trains:
+    build: ./trains/web
+    container_name: trains
+    restart: unless-stopped
+    expose:
+      - 5000
+    volumes:
+      - ./trains/web:/code
+    env_file:
+      - ./trains/.env.prod
+    command: gunicorn --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - nginx_main-network
+
+  flying:
+    build: ./flying_website/web
+    container_name: flying
+    restart: unless-stopped
+    expose:
+      - 5000
+    volumes:
+      - ./flying_website/web:/code
+      - ./flying_website/README.md:/code/app/content/about.md
+    env_file:
+      - ./flying_website/.env.prod
+    command: gunicorn --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
+    networks:
+      - nginx_main-network
+
+        #wikiheist:
+        #build: ./wikiheist/web
+        #container_name: wikiheist
+        #restart: unless-stopped
+        #expose:
+        #- 5000
+        #volumes:
+        #- ./wikiheist/web:/code
+        #env_file:
+        #- ./wikiheist/.env.prod
+        #command: gunicorn --max-requests 5000 --bind 0.0.0.0:5000 manage:app --timeout 120
+        #networks:
+        #- nginx_main-network
+
+networks:
+  nginx_main-network:
+    external: true
+  tor_onion-network:
+    external: true

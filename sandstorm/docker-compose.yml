@@ -1,0 +1,21 @@
+services:
+  sandstorm:
+    image: buildpack-deps
+    restart: unless-stopped
+    container_name: sandstorm
+    volumes:
+      - /opt/sandstorm:/opt/sandstorm
+      - ./sandstorm_ssl:/home/sandstorm/ssl
+    expose:
+      - 443
+    privileged: true
+    networks:
+      - nginx_main-network
+    entrypoint:
+      # ensure sandstorm group ID within the container matches the ID of the sandstorm group on the host
+      bash -c 'useradd --system --user-group sandstorm && groupmod -g 987 sandstorm && /opt/sandstorm/sandstorm start && tail -f /opt/sandstorm/var/log/sandstorm.log & sleep infinity'
+
+networks:
+  nginx_main-network:
+    external: true
+

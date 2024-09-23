@@ -1,0 +1,13 @@
+services:
+  php:
+    container_name: php
+    image: php:8.0-fpm
+    restart: unless-stopped
+    volumes:
+       - /home/simonxix/php_websites:/var/php
+    networks:
+       - nginx_main-network
+
+networks:
+  nginx_main-network:
+    external: true

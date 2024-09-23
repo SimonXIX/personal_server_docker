@@ -1,0 +1,30 @@
+services:
+  tor:
+    # experiments with Tor services in Docker based on https://github.com/torservers/onionize-docker
+    container_name: tor
+    image: torservers/onionize
+    restart: unless-stopped
+    volumes:
+       - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+       - nginx_main-network
+       - onion-network
+
+  onion-nginx:
+    container_name: onion-nginx
+    image: nginx:latest
+    restart: unless-stopped
+    volumes:
+       - ./nginx-conf:/etc/nginx/conf.d
+    environment:
+       - ONIONSERVICE_NAME=onion-nginx
+    networks:
+       - onion-network
+
+networks:
+  nginx_main-network:
+    external: true
+  onion-network:
+    driver: bridge
+    driver_opts:
+       enable_ip_masquerade: "false"

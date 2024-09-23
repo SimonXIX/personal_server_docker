@@ -1,24 +1,28 @@
-# Docker Compose and Nginx configuration for simonxix.com
+# Docker Compose configuration for simonxix.com
 
-This repository is the Docker Compose and Nginx configuration for the SSD virtual server running https://simonxix.com and other *.simonxix.com websites. It's potentially useful for anyone looking to deploy WordPress, Sandstorm, GoAccess, Joplin Server, or PHP against Nginx in Docker Compose. 
+This repository is the Docker Compose configuration for the Virtual Private Server running https://simonxix.com and other *.simonxix.com websites and services. It's potentially useful for anyone looking to deploy Docker Compose with a variety of services including Flask, Ghost, GoAccess, Joplin Server, Podfetch, Sandstorm, and WordPress all running through a Nginx reverse proxy. 
 
 ## Technical details
 
-IP address: 82.163.79.194
+IPv4 address: 193.108.55.54
+
+IPv6 address: 2001:1600:13:101::1120
 
 Operating system: Ubuntu 24.04.1 LTS
 
-Processors: 4 cores
+Processors: 4 CPU
 
-RAM: 1GB
+RAM: 4 GB
 
-Hard disk space: 50 GB
+Hard disk space: 80 GB
 
-Bandwidth: 3TB
+Bandwidth: 500 Mb/s
+
+Location: Satigny
 
 ## Docker Compose
 
-All running services on simonxix.com are running as Docker containers. These run from /home/simonxix/docker and currently includes MySQL, WordPress (PHP), Apache Solr, GoAccess, Nginx, and Sandstorm. 
+All running services on simonxix.com are running as Docker containers. These run from separate folders in /home/simonxix/docker and currently includes MySQL, WordPress (PHP), Apache Solr, GoAccess, Nginx, and Sandstorm. 
 
 `sudo docker-compose down`
 

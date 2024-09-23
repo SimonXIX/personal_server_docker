@@ -1,0 +1,47 @@
+services:
+  joplin:
+    container_name: joplin
+    image: joplin/server:latest
+    restart: unless-stopped
+    depends_on:
+      - joplin_db
+    environment:
+       - APP_BASE_URL=$APP_BASE_URL
+       - APP_PORT=22300
+       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+       - POSTGRES_DATABASE=$POSTGRES_DATABASE
+       - POSTGRES_USER=$POSTGRES_USER
+       - POSTGRES_PORT=$POSTGRES_PORT
+       - POSTGRES_HOST=joplin_db
+       - DB_CLIENT=pg
+       - MAILER_ENABLED=1
+       - MAILER_HOST=$MAILER_HOST
+       - MAILER_PORT=$MAILER_PORT
+       - MAILER_SECURE=0
+       - MAILER_AUTH_USER=$MAILER_AUTH_USER
+       - MAILER_AUTH_PASSWORD=$MAILER_AUTH_PASSWORD
+       - MAILER_NOREPLY_NAME=Joplin
+       - MAILER_NOREPLY_EMAIL=MAILER_NOREPLY_EMAIL
+    ports:
+       - '22300:22300'
+    networks:
+       - nginx_main-network
+
+  joplin_db:
+    container_name: joplin_db
+    image: postgres:16.3
+    restart: unless-stopped
+    ports:
+       - "5432:5432"
+    volumes:
+       - ./joplin-data:/var/lib/postgresql/data
+    environment:
+       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+       - POSTGRES_USER=$POSTGRES_USER
+       - POSTGRES_DB=$POSTGRES_DATABASE
+    networks:
+       - nginx_main-network
+
+networks:
+  nginx_main-network:
+    external: true

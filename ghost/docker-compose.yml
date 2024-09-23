@@ -1,0 +1,44 @@
+services:
+  ghost:
+    image: ghost:${GHOST_TAG}
+    container_name: ghost
+    restart: unless-stopped
+    ports:
+      - 8080:2368
+    env_file:
+      - .env
+    environment:
+      # see https://ghost.org/docs/config/#configuration-options
+      database__client: mysql
+      database__connection__host: ghost_db
+      # this url value is just an example, and is likely wrong for your environment!
+      url: https://opensauce.simonxix.com
+      # contrary to the default mentioned in the linked documentation, this image defaults to NODE_ENV=production (so development mode needs to be explicitly specified if desired)
+      #NODE_ENV: development
+    volumes:
+      - ./ghost-data:/var/lib/ghost/content
+      - ./ghost-data/template.hbs:/var/lib/ghost/current/node_modules/@tryghost/email-service/lib/email-templates/template.hbs
+    depends_on:
+      - ghost_db
+    networks:
+      - nginx_main-network
+
+  ghost_db:
+    container_name: ghost_db
+    image: mysql:8.0
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    volumes:
+      - ghost_db:/var/lib/mysql
+    networks:
+      - nginx_main-network
+
+volumes:
+  ghost_db:
+
+networks:
+  nginx_main-network:
+    external: true

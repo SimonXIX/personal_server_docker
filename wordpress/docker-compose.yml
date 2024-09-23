@@ -1,0 +1,36 @@
+services:
+  wordpress:
+    depends_on:
+      - wordpress_db
+    image: wordpress:php8.0-fpm
+    container_name: wordpress
+    restart: unless-stopped
+    environment:
+      - WORDPRESS_DB_HOST=wordpress_db:3306
+      - WORDPRESS_DB_USER=$MARIADB_USER
+      - WORDPRESS_DB_PASSWORD=$MARIADB_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - ./wordpress_content:/var/www/html
+    networks:
+      - nginx_main-network
+
+  wordpress_db:
+    image: mariadb:latest
+    container_name: wordpress_db
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD
+      - MYSQL_DATABASE=wordpress
+    volumes:
+      - wordpress_db_data:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - nginx_main-network
+
+volumes:
+  wordpress_db_data:
+
+networks:
+  nginx_main-network:
+    external: true
