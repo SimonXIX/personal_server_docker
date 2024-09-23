@@ -32,21 +32,21 @@ Each stack can be brought up or down by going to their respective subdirectory a
 
 ### subdirectories
 
-./flask contains Flask applications bundled together in the same Docker Compose stack. These are initialised as submodules from their respective Git repositories. 
+./flask runs Flask (https://flask.palletsprojects.com/) applications bundled together in the same Docker Compose stack. These applications are initialised in this directory as submodules from their respective Git repositories. 
 
-./ghost contains the Ghost (https://ghost.org/) platform for newsletter publishing. This runs the Ghost application and a MySQL database for Ghost's data.
+./ghost runs Ghost (https://ghost.org/), the newsletter publishing platform. The stack includes the Ghost application and a MySQL database for Ghost's data.
 
-./goaccess contains the GoAccess (https://goaccess.io/) real-time visual web log analyser. This runs GoAccess pointed at the Nginx access log. This configuration is based on icamys' configuration for GoAccess in Docker and Nginx at https://github.com/icamys/docker-goaccess-nginx. 
+./goaccess runs GoAccess (https://goaccess.io/) real-time visual web log analyser pointed at the Nginx access log. This configuration is based on icamys' configuration for GoAccess in Docker and Nginx at https://github.com/icamys/docker-goaccess-nginx. 
 
-./joplin contains the Joplin Server (https://joplinapp.org/) for storing notes for Joplin client apps. This runs the Joplin Server application and a PostgreSQL database with encrypted notes data kept in ./joplin/joplin-data.
+./joplin runs Joplin Server (https://joplinapp.org/) for storing notes. This stack includes the Joplin Server application and a PostgreSQL database with encrypted notes data kept in ./joplin/joplin-data.
 
-./lego contains Lego (https://go-acme.github.io/lego/), a Let's Encrypt client and ACME library for retrieving and renewing SSL certificates. This handles the renewal of the server's SSL certificate for its main domain and wildcard for subdomains. See below for further details. 
+./lego runs Lego (https://go-acme.github.io/lego/), a Let's Encrypt client and ACME library for retrieving and renewing SSL certificates. This handles the renewal of the server's SSL certificate for its main domain and wildcard for subdomains. See below for further details. 
 
-./nginx contains Nginx (https://nginx.org/) webserver and reverse proxy. It handles all requests on the server and is configured to point to the relevant services and Docker containers.
+./nginx runs Nginx (https://nginx.org/) webserver and reverse proxy. It handles all requests on the server and is configured to point to the relevant services and Docker containers.
 
-./php contains a simple Docker Compose file to run PHP8-FPM for some old PHP websites. 
+./php runs a simple Docker Compose file for PHP8-FPM for some old PHP websites. 
 
-./podfetch contains Podfetch (https://github.com/SamTV12345/PodFetch), a podcast listening platform that runs in the browser. This runs Podfetch itself and a PostgreSQL database for Podfetch. 
+./podfetch runs Podfetch (https://github.com/SamTV12345/PodFetch), a podcast listening platform that runs in the browser. This stack includes Podfetch itself and a PostgreSQL database for Podfetch. 
 
 ./sandstorm runs Sandstorm (https://sandstorm.org/) inside a buildpack-deps container. This runs Sandstorm from /opt/sandstorm on the host server. There are also scripts in here to handle renewing the SSL certificates for the *.sandcats.io domain and extracting the certificates to be picked up by Nginx. This largely follows Juanjo Alvarez's instructions for this here: https://juanjoalvarez.net/posts/2017/how-set-sandstorm-behind-reverse-proxy-keeping-you/. Note also this extremely annoying and non-obvious requirement for running in Ubuntu 24.04: https://groups.google.com/g/sandstorm-dev/c/4JFhr7B7QZU
 
