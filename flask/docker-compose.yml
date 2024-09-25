@@ -21,6 +21,7 @@ services:
     expose:
       - 5000
     volumes:
+      - ./carbon-graph/README.md:/code/README.md
       - ./carbon-graph/web:/code
       - ./carbon-graph/google_credentials.json:/code/app/google_credentials.json
     env_file:
