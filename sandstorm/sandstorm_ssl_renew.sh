@@ -9,5 +9,5 @@ cd /home/simonxix/docker/
 $DOCKER exec sandstorm /home/sandstorm/ssl/extract_certs.sh
 $DOCKER exec sandstorm cp sandstorm.key /home/sandstorm/ssl/
 $DOCKER exec sandstorm cp sandstorm.pem /home/sandstorm/ssl/
-$DOCKER compose kill -s SIGHUP webserver
-$DOCKER system prune -af
+#$DOCKER compose kill -s SIGHUP webserver
+#$DOCKER system prune -af

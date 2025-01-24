@@ -20,6 +20,7 @@ services:
       - /home/simonxix/php_websites:/var/php/
       # WordPress
       - ../wordpress/wordpress_content:/var/wordpress
+      - ../wordpress1/wordpress_content:/var/wordpress1
       # GoAccess
       - ../goaccess/html:/srv/report
       - /home/simonxix/logs/nginx:/var/log/nginx
