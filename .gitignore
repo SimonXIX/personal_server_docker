@@ -1,4 +1,5 @@
 .env
+calibre/calibre-data
 ghost/.env
 ghost/ghost-data
 goaccess/data/access.conf
