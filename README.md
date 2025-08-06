@@ -8,7 +8,7 @@ IPv4 address: 193.108.55.54
 
 IPv6 address: 2001:1600:13:101::1120
 
-Operating system: Ubuntu 24.04.1 LTS
+Operating system: Ubuntu 24.04.2 LTS
 
 Processors: 4 CPU
 
