@@ -3,7 +3,6 @@ services:
     container_name: lego-run
     image: goacme/lego
     environment:
-      - NJALLA_TOKEN=$NJALLA_TOKEN
       - INFOMANIAK_ACCESS_TOKEN=$INFOMANIAK_ACCESS_TOKEN
     volumes:
       - /etc/letsencrypt/lego_cert_store:/certs
@@ -19,7 +18,6 @@ services:
     container_name: lego-renew
     image: goacme/lego
     environment:
-      - NJALLA_TOKEN=$NJALLA_TOKEN
       - INFOMANIAK_ACCESS_TOKEN=$INFOMANIAK_ACCESS_TOKEN  
     volumes:
       - /etc/letsencrypt/lego_cert_store:/certs
