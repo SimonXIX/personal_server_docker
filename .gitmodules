@@ -1,6 +1,6 @@
 [submodule "flask/simonxix.com"]
 	path = flask/simonxix.com
-	url = https://github.com/SimonXIX/simonxix.com.git
+	url = https://codeberg.org/SimonXIX/simonxix.com.git
 [submodule "flask/when_is_my_train"]
 	path = flask/trains
 	url = https://github.com/SimonXIX/when_is_my_train.git
