@@ -1,18 +1,15 @@
 [submodule "flask/simonxix.com"]
 	path = flask/simonxix.com
 	url = https://codeberg.org/SimonXIX/simonxix.com.git
-[submodule "flask/when_is_my_train"]
-	path = flask/trains
-	url = https://github.com/SimonXIX/when_is_my_train.git
 [submodule "flask/carbon-graph"]
 	path = flask/carbon-graph
-	url = https://github.com/SimonXIX/carbon-graph.git
+	url = https://codeberg.org/SimonXIX/carbon-graph.git
 [submodule "flask/flying_website"]
 	path = flask/flying_website
-	url = https://github.com/SimonXIX/flying_website.git
+	url = https://codeberg.org/SimonXIX/flying_website.git
 [submodule "flask/wikiheist"]
 	path = flask/wikiheist
-	url = https://github.com/SimonXIX/wikiheist.git
+	url = https://codeberg.org/SimonXIX/wikiheist.git
 [submodule "flask/trains"]
 	path = flask/trains
-	url = https://github.com/SimonXIX/when_is_my_train
+	url = https://codeberg.org/SimonXIX/when_is_my_train.git
