@@ -12,6 +12,7 @@
 
 DOCKER="/usr/bin/docker"
 declare -a DOCKER_CONTAINERS=(
+	"calibre"
 	"flask" 
 	"ghost" 
 	"goaccess" 
