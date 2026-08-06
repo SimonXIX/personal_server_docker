@@ -1,29 +1,23 @@
 services:
+  lego-migrate:
+    container_name: lego-migrate
+    image: goacme/lego:v5.3.1
+    volumes:
+      - /etc/letsencrypt/lego_cert_store:/certs
+    command: "migrate --path=\"/certs\""
+
   lego-run:
     container_name: lego-run
-    image: goacme/lego
+    image: goacme/lego:v5.3.1
     environment:
       - INFOMANIAK_ACCESS_TOKEN=$INFOMANIAK_ACCESS_TOKEN
     volumes:
       - /etc/letsencrypt/lego_cert_store:/certs
-    command: "--accept-tos
+    command: "run
+             --accept-tos
              --email=\"simon.bowie@protonmail.com\"
              --dns=\"infomaniak\"
              --path=\"/certs\"
              --domains=\"simonxix.com\"
-             --domains=\"*.simonxix.com\"
-             run"
+             --domains=\"*.simonxix.com\""
 
-  lego-renew:
-    container_name: lego-renew
-    image: goacme/lego
-    environment:
-      - INFOMANIAK_ACCESS_TOKEN=$INFOMANIAK_ACCESS_TOKEN  
-    volumes:
-      - /etc/letsencrypt/lego_cert_store:/certs
-    command: "--email=\"simon.bowie@protonmail.com\"
-             --dns=\"infomaniak\"
-             --path=\"/certs\"
-             --domains=\"simonxix.com\"
-             --domains=\"*.simonxix.com\"
-             renew --days 60"
