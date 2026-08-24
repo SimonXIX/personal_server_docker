@@ -10,6 +10,7 @@ services:
       # Nginx configuration files
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./nginx-conf:/etc/nginx/conf.d
+      - ./nginx-block-ai-bots.conf:/etc/nginx/nginx-block-ai-bots.conf
       # SSL certificates/keys
       - /etc/letsencrypt/lego_cert_store:/certs    
       # Sandstorm SSL
