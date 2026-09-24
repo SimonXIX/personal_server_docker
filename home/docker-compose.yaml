@@ -1,0 +1,22 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    stop_grace_period: 60s
+    privileged: true
+    #network_mode: host
+    environment:
+      TZ: Europe/London
+    expose:
+      - 8123
+    networks:
+      - nginx_main-network
+
+networks:
+  nginx_main-network:
+    external: true

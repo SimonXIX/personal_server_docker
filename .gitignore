@@ -6,6 +6,7 @@ goaccess/data/access.conf
 goaccess/data/database
 goaccess/GeoLite2-City.mmdb
 goaccess/html/index.html
+home/config
 joplin/.env
 joplin/joplin-data
 lego/.env
